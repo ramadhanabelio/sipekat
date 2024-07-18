@@ -1,6 +1,6 @@
 <div id="start-of-content" align="center">
 
-<img width="" src="static/img/logo.png"  width=160 height=160  align="center">
+<img width="" src="static/img/logo.png" align="center">
 
 ##
 
