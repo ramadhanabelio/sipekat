@@ -1,0 +1,51 @@
+{% extends "base.html" %} {% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h2>Sertifikat</h2>
+  <button type="button" class="btn btn-info text-white">+ Tambah</button>
+</div>
+<table id="sertifikatTable" class="table table-striped">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Judul</th>
+      <th>Nomor Sertifikat</th>
+      <th>Nama Pemegang</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for komoditas in jenis_beras %}
+    <tr>
+      <th>{{ loop.index }}.</th>
+      <td>{{ komoditas }}</td>
+      <th>{{ loop.index }}.</th>
+      <td>{{ komoditas }}</td>
+      <td><span class="badge rounded-pill bg-primary">Stabil</span></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h4>Daftar Sertifikat</h4>
+</div>
+
+<div>
+  <div class="row">
+    <div class="col-md-4 col-xl-3">
+      <div class="card bg-c-blue order-card">
+        <div class="card-block">
+          <h6 class="mb-4">Sertifikat</h6>
+          <h2 class="text-right"><span data-feather="file-text" class="me-5"></span><span>486</span></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ul>
+  {% for sertifikat in sertifikat_list %}
+  <li><a href="{{ url_for('detail_sertifikat', id=sertifikat['id']) }}">{{ sertifikat['judul'] }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}
