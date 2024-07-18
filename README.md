@@ -12,7 +12,7 @@
 
 SiPEKAT is a website that can diagnose diseases in acacia plants through input symptoms and provide treatment so that your plants are healthy and of good quality.
 
-![SiPEKAT Thumbnail](img/Thumbnail.png)
+![SiPEKAT Thumbnail](static/img/Thumbnail.png)
 
 ## 📖 Features
 
