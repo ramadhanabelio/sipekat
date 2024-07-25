@@ -68,15 +68,20 @@
       <td>{{ sertifikat.nomor_sertifikat }}</td>
       <td>{{ sertifikat.nama_pemegang }}</td>
       <td>
-        <a href="#" class="badge bg-info text-white" data-bs-toggle="modal" data-bs-target="#detailCertificateModal" data-id="{{ sertifikat.id }}">
+        <a href="#" class="badge bg-success" data-bs-toggle="modal" data-bs-target="#detailCertificateModal" data-id="{{ sertifikat.id }}">
           <i class="bi bi-info-circle"></i>
         </a>
-        <a href="#" data-bs-toggle="modal" data-bs-target="#editCertificateModal" data-id="{{ sertifikat.id }}" class="badge bg-warning text-dark ms-2">
+        <a href="{{ url_for('edit_sertifikat', id=sertifikat.id) }}" class="badge bg-warning text-dark ms-2">
           <i class="bi bi-pencil"></i>
         </a>
-        <a href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" data-id="{{ sertifikat.id }}" class="badge bg-danger text-white ms-2">
+        <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" data-id="{{ sertifikat.id }}" class="badge bg-danger text-white ms-2">
           <i class="bi bi-trash"></i>
-        </a>
+        </a> -->
+        <form action="{{ url_for('delete_sertifikat', id=sertifikat.id) }}" method="POST" style="display: inline">
+          <span class="badge bg-danger ms-2" onclick="if(confirm('Apakah Anda yakin ingin menghapus sertifikat ini?')) { this.closest('form').submit(); }">
+            <i class="bi bi-trash"></i>
+          </span>
+        </form>
       </td>
     </tr>
     {% endfor %}
@@ -125,6 +130,56 @@
   </div>
 </div>
 
+<!-- Modal Edit Sertifikat -->
+<!-- <div class="modal fade" id="editCertificateModal" tabindex="-1" aria-labelledby="editCertificateModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editCertificateModalLabel">Edit Sertifikat</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% if sertifikat %}
+        <form action="{{ url_for('edit_sertifikat', id=sertifikat.id) }}" method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="judul" class="form-label">Judul</label>
+            <input type="text" class="form-control" id="judul" name="judul" value="{{ sertifikat.judul }}" required />
+          </div>
+          <div class="mb-3">
+            <label for="nomor_sertifikat" class="form-label">Nomor Sertifikat</label>
+            <input type="text" class="form-control" id="nomor_sertifikat" name="nomor_sertifikat" value="{{ sertifikat.nomor_sertifikat }}" required />
+          </div>
+          <div class="mb-3">
+            <label for="nama_pemegang" class="form-label">Nama Pemegang</label>
+            <input type="text" class="form-control" id="nama_pemegang" name="nama_pemegang" value="{{ sertifikat.nama_pemegang }}" required />
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="tanggal_terbit" class="form-label">Tanggal Terbit</label>
+              <input type="date" class="form-control" id="tanggal_terbit" name="tanggal_terbit" value="{{ sertifikat.tanggal_terbit }}" required />
+            </div>
+            <div class="col-md-6">
+              <label for="tanggal_berakhir" class="form-label">Tanggal Berakhir</label>
+              <input type="date" class="form-control" id="tanggal_berakhir" name="tanggal_berakhir" value="{{ sertifikat.tanggal_berakhir }}" required />
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="file" class="form-label">File</label>
+            <input type="file" class="form-control" id="file" name="file" />
+            <div id="filePreview" class="mt-2"></div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-info text-white">Simpan</button>
+          </div>
+        </form>
+        {% else %}
+        <div class="alert alert-warning text-center" role="alert">Sertifikat tidak ditemukan!</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div> -->
+
 <!-- Modal Konfirmasi Hapus -->
 <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -136,6 +191,7 @@
       <div class="modal-body">Apakah Anda yakin ingin menghapus sertifikat ini?</div>
       <div class="modal-footer">
         <form action="{{ url_for('delete_sertifikat', id=0) }}" method="POST" id="deleteForm">
+          <input type="hidden" name="_method" value="DELETE" />
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
           <button type="submit" class="btn btn-danger">Hapus</button>
         </form>
@@ -144,97 +200,65 @@
   </div>
 </div>
 
-<!-- Modal Edit Sertifikat -->
-<div class="modal fade" id="editCertificateModal" tabindex="-1" aria-labelledby="editCertificateModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editCertificateModalLabel">Edit Sertifikat</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form action="{{ url_for('edit_sertifikat', id=0) }}" method="POST" enctype="multipart/form-data">
-          <div class="mb-3">
-            <label for="judul" class="form-label">Judul</label>
-            <input type="text" class="form-control" id="judul" name="judul" required />
-          </div>
-          <div class="mb-3">
-            <label for="nomor_sertifikat" class="form-label">Nomor Sertifikat</label>
-            <input type="text" class="form-control" id="nomor_sertifikat" name="nomor_sertifikat" required />
-          </div>
-          <div class="mb-3">
-            <label for="nama_pemegang" class="form-label">Nama Pemegang</label>
-            <input type="text" class="form-control" id="nama_pemegang" name="nama_pemegang" required />
-          </div>
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label for="tanggal_terbit" class="form-label">Tanggal Terbit</label>
-              <input type="date" class="form-control" id="tanggal_terbit" name="tanggal_terbit" required />
-            </div>
-            <div class="col-md-6">
-              <label for="tanggal_berakhir" class="form-label">Tanggal Berakhir</label>
-              <input type="date" class="form-control" id="tanggal_berakhir" name="tanggal_berakhir" required />
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="file" class="form-label">File</label>
-            <input type="file" class="form-control" id="file" name="file" />
-          </div>
-          <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-info text-white">Simpan</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const detailCertificateModal = document.getElementById("detailCertificateModal");
+    // Modal detail sertifikat
+    var detailModal = document.getElementById("detailCertificateModal");
+    detailModal.addEventListener("show.bs.modal", function (event) {
+      var button = event.relatedTarget;
+      var id = button.getAttribute("data-id");
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "/sertifikat/" + id, true);
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          var sertifikat = JSON.parse(xhr.responseText);
+          document.getElementById("detail-judul").textContent = sertifikat.judul;
+          document.getElementById("detail-nomor_sertifikat").textContent = sertifikat.nomor_sertifikat;
+          document.getElementById("detail-nama_pemegang").textContent = sertifikat.nama_pemegang;
+          document.getElementById("detail-tanggal_terbit").textContent = sertifikat.tanggal_terbit;
+          document.getElementById("detail-tanggal_berakhir").textContent = sertifikat.tanggal_berakhir;
 
-    detailCertificateModal.addEventListener("show.bs.modal", function (event) {
-      const button = event.relatedTarget;
-      const id = button.getAttribute("data-id");
-
-      // Fetch the certificate data using AJAX
-      fetch(`/detail_sertifikat/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          document.getElementById("detail-judul").textContent = data.judul;
-          document.getElementById("detail-nomor_sertifikat").textContent = data.nomor_sertifikat;
-          document.getElementById("detail-nama_pemegang").textContent = data.nama_pemegang;
-          document.getElementById("detail-tanggal_terbit").textContent = data.tanggal_terbit;
-          document.getElementById("detail-tanggal_berakhir").textContent = data.tanggal_berakhir;
-          document.getElementById("detail-file").src = `${data.dokumen}`;
-        })
-        .catch((error) => console.error("Error fetching certificate details:", error));
+          var iframe = document.getElementById("detail-file");
+          iframe.src = sertifikat.dokumen ? sertifikat.dokumen : "";
+        } else {
+          console.error("Error loading certificate details");
+        }
+      };
+      xhr.send();
     });
-  });
 
-  document.addEventListener("DOMContentLoaded", function () {
+    // Modal edit sertifikat
     const editCertificateModal = document.getElementById("editCertificateModal");
-    const deleteConfirmationModal = document.getElementById("deleteConfirmationModal");
-
     editCertificateModal.addEventListener("show.bs.modal", function (event) {
       const button = event.relatedTarget;
       const id = button.getAttribute("data-id");
 
-      // Set the action URL for the form
-      const form = editCertificateModal.querySelector("form");
-      form.action = `/edit_sertifikat/${id}`;
-
-      // Fetch current data and populate the form (use AJAX if necessary)
-      // For now, assume the data is set up in backend routes or similar.
+      fetch(`/sertifikat/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          const form = editCertificateModal.querySelector("form");
+          form.action = `/edit_sertifikat/${id}`;
+          form.querySelector("#judul").value = data.judul;
+          form.querySelector("#nomor_sertifikat").value = data.nomor_sertifikat;
+          form.querySelector("#nama_pemegang").value = data.nama_pemegang;
+          form.querySelector("#tanggal_terbit").value = data.tanggal_terbit;
+          form.querySelector("#tanggal_berakhir").value = data.tanggal_berakhir;
+          const filePreview = form.querySelector("#filePreview");
+          filePreview.innerHTML = data.dokumen ? `<a href="${data.dokumen}" target="_blank">Lihat File</a>` : "Tidak ada file";
+        })
+        .catch((error) => console.error("Error fetching certificate details:", error));
     });
 
-    deleteConfirmationModal.addEventListener("show.bs.modal", function (event) {
-      const button = event.relatedTarget;
-      const id = button.getAttribute("data-id");
+    // Modal hapus sertifikat
+    vdocument.addEventListener("DOMContentLoaded", function () {
+      var deleteConfirmationModal = document.getElementById("deleteConfirmationModal");
+      deleteConfirmationModal.addEventListener("show.bs.modal", function (event) {
+        var button = event.relatedTarget;
+        var id = button.getAttribute("data-id");
 
-      // Set the action URL for the form
-      const form = deleteConfirmationModal.querySelector("form");
-      form.action = `/delete_sertifikat/${id}`;
+        var form = deleteConfirmationModal.querySelector("form");
+        form.action = "/delete_sertifikat/" + id;
+      });
     });
   });
 </script>

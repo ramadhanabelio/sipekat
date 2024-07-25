@@ -17,7 +17,6 @@ app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
 app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
 app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
 app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -113,7 +112,7 @@ def sertifikat():
             cursor.close()
             connection.close()
 
-@app.route('/detail_sertifikat/<int:id>')
+@app.route('/sertifikat/<int:id>')
 def detail_sertifikat(id):
     if 'logged_in' not in session:
         return redirect(url_for('login'))
@@ -134,7 +133,7 @@ def detail_sertifikat(id):
         if connection.is_connected():
             cursor.close()
             connection.close()
-            
+
 @app.route('/add_sertifikat', methods=['POST'])
 def add_sertifikat():
     if 'logged_in' not in session:
@@ -175,6 +174,7 @@ def add_sertifikat():
 def delete_sertifikat(id):
     if 'logged_in' not in session:
         return redirect(url_for('login'))
+
     try:
         connection = create_db_connection()
         cursor = connection.cursor()
@@ -188,6 +188,7 @@ def delete_sertifikat(id):
         if connection.is_connected():
             cursor.close()
             connection.close()
+    
     return redirect(url_for('sertifikat'))
 
 @app.route('/edit_sertifikat/<int:id>', methods=['GET', 'POST'])
@@ -199,8 +200,8 @@ def edit_sertifikat(id):
         judul = request.form['judul']
         nomor_sertifikat = request.form['nomor_sertifikat']
         nama_pemegang = request.form['nama_pemegang']
-        tanggal_terbit = request.form['tanggal_terbit'] if 'enable_tanggal_terbit' in request.form else None
-        tanggal_berakhir = request.form['tanggal_berakhir'] if 'enable_tanggal_berakhir' in request.form else None
+        tanggal_terbit = request.form['tanggal_terbit']
+        tanggal_berakhir = request.form['tanggal_berakhir']
         file = request.files['file']
         
         file_path = None
@@ -213,7 +214,7 @@ def edit_sertifikat(id):
             cursor = connection.cursor()
             cursor.execute(
                 'UPDATE sertifikat SET judul = %s, nomor_sertifikat = %s, nama_pemegang = %s, tanggal_terbit = %s, tanggal_berakhir = %s, dokumen = %s WHERE id = %s',
-                (judul, nomor_sertifikat, nama_pemegang, tanggal_terbit, tanggal_berakhir, file_path, id)
+                (judul, nomor_sertifikat, nama_pemegang, tanggal_terbit, tanggal_berakhir, file_path if file_path else request.form['existing_file'], id)
             )
             connection.commit()
             flash('Sertifikat berhasil diperbarui', 'success')
@@ -245,5 +246,4 @@ def edit_sertifikat(id):
             connection.close()
 
 if __name__ == '__main__':
-    create_db_connection()
     app.run(debug=True)
