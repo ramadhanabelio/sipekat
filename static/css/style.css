@@ -1,6 +1,6 @@
-body {
+/* body {
   font-size: 0.875rem;
-}
+} */
 
 .feather {
   width: 16px;
@@ -143,7 +143,7 @@ body {
 }
 
 .sidebar .nav-link.active {
-  color: #2470dc;
+  color: #05acef;
 }
 
 .sidebar .nav-link:hover .feather,
