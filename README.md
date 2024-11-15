@@ -4,13 +4,13 @@
 
 ##
 
-### Web Application for Storing Certificates at PLN Nusantara Power
+### SiPEKAT, Web Application for Storing Certificates at PLN Nusantara Power
 
 </div>
 
 ## 📙 Description
 
-SiPEKAT is a website that can diagnose diseases in acacia plants through input symptoms and provide treatment so that your plants are healthy and of good quality.
+SiPEKAT is a web-based application designed to facilitate data collection and management of certificate archives issued by PT. PLN Nusantara Power Pekanbaru. The application provides a secure and structured digital platform for quickly storing, searching and accessing certificate archives, replacing less efficient manual methods. With SiPEKAT, each certificate can be recorded and organized in detail, allowing users to track certificate history and manage information more transparently and securely. This application supports the efficiency and accuracy of data collection, making the audit and reporting process easier at PT. PLN Nusantara Power Pekanbaru.
 
 ![SiPEKAT Thumbnail](static/img/Thumbnail.png)
 
@@ -18,8 +18,8 @@ SiPEKAT is a website that can diagnose diseases in acacia plants through input s
 
 Interesting features of SiPEKAT:
 
-<!-- 1. **Diagnostic Diseases** : Diagnose acacia plant diseases by selecting the selected symptoms via the checkbox in the list display.
+1. **Authentication** : Admins can log in to the application via a registered account.
 
 2. **Dashboard Admin** : Displays visualization of data on the website.
 
-3. **CRUD Data** : Can add, view, change and delete Symptoms, Diseases, Settings and Information data. -->
+3. **CRUD Data** : Can add, view, change, search and delete certificate data issued by PT. PLN Nusantara Power Pekanbaru.
